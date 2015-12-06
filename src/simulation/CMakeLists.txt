@@ -1,12 +1,8 @@
 cmake_minimum_required( VERSION 2.8 )
+set( FOLDER_NAME simulation )
 
-# Sub dirctories
+# Structure
 set( SUB_DIRECTORIES )
-foreach( SUB_DIR ${SUB_DIRECTORIES} )
-  add_subdirectory( ${SUB_DIR} )
-endforeach( SUB_DIR )
-
-# Library
 set( HEADER_FILES
   Simulation.h
   SimulationImpl.h
@@ -14,4 +10,16 @@ set( HEADER_FILES
 set( SRC_FILES 
   SimulationImpl.cc
 )
+
+# Add sub directories
+foreach( SUB_DIR ${SUB_DIRECTORIES} )
+  add_subdirectory( ${SUB_DIR} )
+endforeach( SUB_DIR )
+
+# Style check
+set( CHECK_FILES ${HEADER_FILES} ${SRC_FILES})
+add_style_check_target(${FOLDER_NAME}_check
+  "${CHECK_FILES}" "${SUB_DIRECTORES}")
+
+# Add library
 add_library(simulation ${SRC_FILES})
