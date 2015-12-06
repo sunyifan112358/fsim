@@ -26,3 +26,16 @@
 *.exe
 *.out
 *.app
+fsim
+
+# CMake files
+cmake_install.cmake
+Makefile
+CMakeCache.txt
+CMakeFiles
+
+# Google Test
+gtest
+
+# Vim temp files
+*.swp

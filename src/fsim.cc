@@ -20,20 +20,12 @@
 * THE SOFTWARE.
 */
 
-#ifndef SRC_SIMULATION_SIMULATION_H_
-#define SRC_SIMULATION_SIMULATION_H_
+#include <memory>
+#include "src/simulation/SimulationImpl.h"
 
-namespace fsim {
-namespace simulation {
-
-class Simulation {
- public:
-  Simulation() {}
-  virtual ~Simulation() {}
-  virtual void Run() = 0;
-};
-
-}  // namespace simulation
-}  // namespace fsim
-
-#endif  // SRC_SIMULATION_SIMULATION_H_
+int main(int argc, char *argv[]) {
+  auto simulation = std::unique_ptr<fsim::simulation::SimulationImpl>(
+      new fsim::simulation::SimulationImpl());
+  simulation->Run();
+  return 0;
+}

@@ -20,20 +20,15 @@
 * THE SOFTWARE.
 */
 
-#ifndef SRC_SIMULATION_SIMULATION_H_
-#define SRC_SIMULATION_SIMULATION_H_
+#include <iostream>
+#include "src/simulation/SimulationImpl.h"
 
 namespace fsim {
 namespace simulation {
 
-class Simulation {
- public:
-  Simulation() {}
-  virtual ~Simulation() {}
-  virtual void Run() = 0;
-};
+void SimulationImpl::Run() {
+  std::cout << "It works!";
+}
 
-}  // namespace simulation
+}
 }  // namespace fsim
-
-#endif  // SRC_SIMULATION_SIMULATION_H_
