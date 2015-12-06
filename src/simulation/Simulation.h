@@ -20,19 +20,20 @@
 * THE SOFTWARE.
 */
 
-#ifndef SRC_SCHEDULER_SCHEDULER_H_
-#define SRC_SCHEDULER_SCHEDULER_H_
+#ifndef SRC_SIMULATION_SIMULATION_H_
+#define SRC_SIMULATION_SIMULATION_H_
 
 namespace fsim {
-namespace scheduler {
+namespace simulation {
 
-class Scheduler {
+class Simulation {
  public:
-  Scheduler() {}
-  virtual ~Scheduler() {}
+  Simulation() {}
+  virtual ~Simulation() {}
+  virtual Run() = 0;
 };
 
-}  // namespace scheduler
+}  // namespace simulation
 }  // namespace fsim
 
-#endif
+#endif  // SRC_SIMULATION_SIMULATION_H_
