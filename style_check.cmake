@@ -41,7 +41,7 @@ function(add_style_check_target TARGET_NAME SOURCES_LIST SUB_DIRS)
       "${CMAKE_CURRENT_SOURCE_DIR}"
       "${SOURCE_DIR}/cpplint/cpplint.py"
       ${SOURCES_LIST}
-      DEPENDS ${SOURCES_LIST}
+      DEPENDS cpplint ${SOURCES_LIST}
       COMMENT "Linting ${TARGET_NAME}"
       VERBATIM)
   endif()

@@ -38,5 +38,8 @@ CTestTestfile.cmake
 # Google Test
 gtest
 
+# Cpplint
+cpplint
+
 # Vim temp files
 *.swp
