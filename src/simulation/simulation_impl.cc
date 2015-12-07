@@ -33,15 +33,12 @@ void SimulationImpl::Run() {
 }
 
 void SimulationImpl::AssemblePlatform() {
-
 }
 
 void SimulationImpl::InstallOperatingSystem() {
-
 }
 
 void SimulationImpl::ExecuteProgram() {
-
 }
 
 }  // namespace simulation

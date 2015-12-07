@@ -14,15 +14,7 @@ ExternalProject_Add(cpplint
   INSTALL_COMMAND ""
 )
 ExternalProject_Get_Property(cpplint SOURCE_DIR)
-message(${SOURCE_DIR})
-
-# Check if cpp_lint.py exists
-# find_file(CPP_LINT_PY NAMES cpplint.py DOC "Google cpp style scan program.")
-# if(NOT CPP_LINT_PY)
-#   message ( FATAL_ERROR "cpplint.py not found")
-# endif()
-
-
+set( CPPLINT ${SOURCE_DIR}/cpplint/cpplint.py )
 
 function(add_style_check_target TARGET_NAME SOURCES_LIST SUB_DIRS)
 
@@ -39,7 +31,7 @@ function(add_style_check_target TARGET_NAME SOURCES_LIST SUB_DIRS)
     add_custom_target(${TARGET_NAME}
       COMMAND "${CMAKE_COMMAND}" -E chdir
       "${CMAKE_CURRENT_SOURCE_DIR}"
-      "${SOURCE_DIR}/cpplint/cpplint.py"
+      "${CPPLINT}"
       ${SOURCES_LIST}
       DEPENDS cpplint ${SOURCES_LIST}
       COMMENT "Linting ${TARGET_NAME}"
