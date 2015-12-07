@@ -20,11 +20,3 @@ endforeach( SUB_DIR )
 set( CHECK_FILES ${HEADER_FILES} ${SRC_FILES})
 add_style_check_target(${FOLDER_NAME}_check
   "${CHECK_FILES}" "${SUB_DIRECTORIES}")
-
-# fsim main program
-add_executable(fsim fsim.cc)
-
-# Libraries
-target_link_libraries(fsim 
-  simulation
-)

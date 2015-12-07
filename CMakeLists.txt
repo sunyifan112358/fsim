@@ -30,5 +30,10 @@ foreach( SUB_DIR ${SUB_DIRECTORIES} )
   add_subdirectory( ${SUB_DIR} )
 endforeach( SUB_DIR )
 
+# fsim main program
+add_executable(fsim src/fsim.cc)
 
-
+# Libraries
+target_link_libraries(fsim 
+  simulation
+)
