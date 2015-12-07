@@ -30,10 +30,3 @@ TEST(Simulation, Run) {
   EXPECT_CALL(platform_builder, Build())
     .Times(1);
 }
-
-int main(int argc, char** argv) {
-  ::testing::InitGoogleMock(&argc, argv);
-  return RUN_ALL_TESTS();
-}
-
-

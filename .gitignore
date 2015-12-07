@@ -38,6 +38,7 @@ Testing
 
 # Google Test
 gtest
+*_test
 
 # Cpplint
 cpplint
