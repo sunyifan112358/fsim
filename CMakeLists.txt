@@ -37,3 +37,7 @@ add_executable(fsim src/fsim.cc)
 target_link_libraries(fsim 
   simulation
 )
+
+# Guarantee style is good
+add_dependencies( fsim check )
+
