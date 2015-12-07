@@ -21,28 +21,19 @@
 */
 
 #include "src/simulation/simulation_impl.h"
-#include <iostream>
+#include "src/platform/test/mock_platform_builder.h"
+#include "gmock/gmock.h"
+#include "gtest/gtest.h"
 
-namespace fsim {
-namespace simulation {
-
-void SimulationImpl::Run() {
-  AssemblePlatform();
-  InstallOperatingSystem();
-  ExecuteProgram();
+TEST(Simulation, Run) {
+  fsim::platform::MockPlatformBuilder platform_builder;
+  EXPECT_CALL(platform_builder, Build())
+    .Times(1);
 }
 
-void SimulationImpl::AssemblePlatform() {
-
+int main(int argc, char** argv) {
+  ::testing::InitGoogleMock(&argc, argv);
+  return RUN_ALL_TESTS();
 }
 
-void SimulationImpl::InstallOperatingSystem() {
 
-}
-
-void SimulationImpl::ExecuteProgram() {
-
-}
-
-}  // namespace simulation
-}  // namespace fsim

@@ -20,29 +20,23 @@
 * THE SOFTWARE.
 */
 
-#include "src/simulation/simulation_impl.h"
-#include <iostream>
+#ifndef SRC_PLATFORM_PLATFORM_BUILDER_H_
+#define SRC_PLATFORM_PLATFORM_BUILDER_H_
+
+#include <memory>
+#include "src/platform/platform.h"
 
 namespace fsim {
-namespace simulation {
+namespace platform {
 
-void SimulationImpl::Run() {
-  AssemblePlatform();
-  InstallOperatingSystem();
-  ExecuteProgram();
-}
+class PlatformBuilder {
+ public:
+  PlatformBuilder() {}
+  virtual ~PlatformBuilder() {};
+  virtual std::unique_ptr<Platform> Build() = 0;
+};
 
-void SimulationImpl::AssemblePlatform() {
-
-}
-
-void SimulationImpl::InstallOperatingSystem() {
-
-}
-
-void SimulationImpl::ExecuteProgram() {
-
-}
-
-}  // namespace simulation
+}  // namespace platform
 }  // namespace fsim
+
+#endif  // SRC_PLATFORM_PLATFORM_BUILDER_H_
