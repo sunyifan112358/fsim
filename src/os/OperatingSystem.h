@@ -20,12 +20,20 @@
 * THE SOFTWARE.
 */
 
-#include <memory>
-#include "src/simulation/simulation_impl.h"
+#ifndef SRC_OS_OPERATING_SYSTEM_H_
+#define SRC_OS_OPERATING_SYSTEM_H_
 
-int main(int argc, char *argv[]) {
-  auto simulation = std::unique_ptr<fsim::simulation::SimulationImpl>(
-      new fsim::simulation::SimulationImpl());
-  simulation->Run();
-  return 0;
-}
+namespace fsim {
+namespace os {
+
+class OperatingSystem {
+ public:
+  OperatingSystem() {}
+  virtual ~OperatingSystem() {}
+  virtual void StartProgram() = 0;
+};
+
+}  // namespace os
+}  // namespace fsim
+
+#endif  // SRC_OS_OPERATING_SYSTEM_H_

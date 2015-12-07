@@ -20,22 +20,19 @@
 * THE SOFTWARE.
 */
 
-#ifndef SRC_SIMULATION_SIMULATIONIMPL_H_
-#define SRC_SIMULATION_SIMULATIONIMPL_H_
-
-#include "src/simulation/Simulation.h"
+#ifndef SRC_PLATFORM_PLATFORM_H_
+#define SRC_PLATFORM_PLATFORM_H_
 
 namespace fsim {
-namespace simulation {
+namespace platform {
 
-class SimulationImpl : public Simulation {
+class Platform {
  public:
-  SimulationImpl() {}
-  virtual ~SimulationImpl() {}
-  void Run() override;
+  Platform() {}
+  virtual ~Platform() {}
 };
 
-}  // namespace simulation
+}  // namespace platform
 }  // namespace fsim
 
-#endif  // SRC_SIMULATION_SIMULATIONIMPL_H_
+#endif  // SRC_PLATFORM_PLATFORM_H_

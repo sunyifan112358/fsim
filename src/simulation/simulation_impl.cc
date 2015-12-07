@@ -20,12 +20,12 @@
 * THE SOFTWARE.
 */
 
-#include <memory>
 #include "src/simulation/simulation_impl.h"
+#include <iostream>
 
-int main(int argc, char *argv[]) {
-  auto simulation = std::unique_ptr<fsim::simulation::SimulationImpl>(
-      new fsim::simulation::SimulationImpl());
-  simulation->Run();
-  return 0;
+namespace fsim {
+namespace simulation {
+
+void SimulationImpl::Run() { std::cout << "It works!"; }
 }
+}  // namespace fsim

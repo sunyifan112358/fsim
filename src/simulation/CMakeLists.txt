@@ -4,11 +4,11 @@ set( FOLDER_NAME simulation )
 # Structure
 set( SUB_DIRECTORIES )
 set( HEADER_FILES
-  Simulation.h
-  SimulationImpl.h
+  simulation.h
+  simulation_impl.h
 )
 set( SRC_FILES 
-  SimulationImpl.cc
+  simulation_impl.cc
 )
 
 # Add sub directories
