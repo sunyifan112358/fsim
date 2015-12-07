@@ -1,24 +1,18 @@
+# Check if python is available
+find_package(PythonInterp)
+if(NOT PYTHONINTERP_FOUND)
+  message( FATAL_ERROR "python not found")
+endif()
+
+# Check if cpp_lint.py exists
+find_file(CPP_LINT_PY NAMES cpplint.py DOC "Google cpp style scan program.")
+if(NOT CPP_LINT_PY)
+  message ( FATAL_ERROR "cpplint.py not found")
+endif()
+
+
+
 function(add_style_check_target TARGET_NAME SOURCES_LIST SUB_DIRS)
-
-  message("${SOURCE_LIST}")
-  # Check if python is available
-  find_package(PythonInterp)
-  if(NOT PYTHONINTERP_FOUND)
-    message("python not found")
-    return()
-  endif()
-
-  # Check if cpp_lint.py exists
-  find_file(CPP_LINT_PY NAMES cpplint.py DOC "Google cpp style scan program.")
-  if(NOT CPP_LINT_PY)
-    message ("cpplint.py not found")
-  endif()
-
-  # Check if clang_format exists
-  find_file(CLANG_FORMAT NAMES clang-format DOC "Clang format tool")
-  if(NOT CLANG_FORMAT)
-    message ("clang-format not found")
-  endif()
 
   if(NOT SOURCES_LIST)
     add_custom_target(${TARGET_NAME}
@@ -31,10 +25,6 @@ function(add_style_check_target TARGET_NAME SOURCES_LIST SUB_DIRS)
     #list(REMOVE_DUPLICATES SOURCE_LIST)
     #list(SORT SOURCES_LIST)
     add_custom_target(${TARGET_NAME}
-      COMMAND "${CMAKE_COMMAND}" -E chdir
-      "${CMAKE_CURRENT_SOURCE_DIR}"
-      clang-format -style=Google -i
-      ${SOURCES_LIST}
       COMMAND "${CMAKE_COMMAND}" -E chdir
       "${CMAKE_CURRENT_SOURCE_DIR}"
       "cpplint.py"

@@ -33,6 +33,7 @@ cmake_install.cmake
 Makefile
 CMakeCache.txt
 CMakeFiles
+CTestTestfile.cmake
 
 # Google Test
 gtest
