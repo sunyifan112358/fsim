@@ -33,6 +33,11 @@ class SimulationImpl : public Simulation {
   SimulationImpl() {}
   virtual ~SimulationImpl() {}
   void Run() override;
+
+ private:
+  void AssemblePlatform();
+  void InstallOperatingSystem();
+  void ExecuteProgram();
 };
 
 }  // namespace simulation

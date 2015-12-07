@@ -39,5 +39,8 @@ Testing
 # Google Test
 gtest
 
+# Cpplint
+cpplint
+
 # Vim temp files
 *.swp

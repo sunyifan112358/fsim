@@ -2,7 +2,9 @@ cmake_minimum_required( VERSION 2.8 )
 set( FOLDER_NAME simulation )
 
 # Structure
-set( SUB_DIRECTORIES )
+set( SUB_DIRECTORIES 
+  test
+)
 set( HEADER_FILES
   simulation.h
   simulation_impl.h
