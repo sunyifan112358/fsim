@@ -23,18 +23,25 @@
 #ifndef SRC_SIMULATION_SIMULATION_IMPL_H_
 #define SRC_SIMULATION_SIMULATION_IMPL_H_
 
+#include <memory>
 #include "src/simulation/simulation.h"
+#include "src/platform/platform_builder.h"
+#include "src/platform/platform.h"
 
 namespace fsim {
 namespace simulation {
 
 class SimulationImpl : public Simulation {
  public:
-  SimulationImpl() {}
-  virtual ~SimulationImpl() {}
+  explicit SimulationImpl(
+      std::unique_ptr<platform::PlatformBuilder> platform_builder);
+  virtual ~SimulationImpl();
   void Run() override;
 
  private:
+  std::unique_ptr<platform::PlatformBuilder> platform_builder_;
+  std::unique_ptr<platform::Platform> platform_;
+
   void AssemblePlatform();
   void InstallOperatingSystem();
   void ExecuteProgram();

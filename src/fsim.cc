@@ -21,11 +21,23 @@
 */
 
 #include <memory>
+#include "src/simulation/simulation.h"
 #include "src/simulation/simulation_impl.h"
+#include "src/platform/platform_builder.h"
+
+std::unique_ptr<fsim::simulation::Simulation> CreateSimulation() {
+  using fsim::simulation::Simulation;
+  using fsim::simulation::SimulationImpl;
+  using fsim::platform::PlatformBuilder;
+
+  auto platform_builder = std::unique_ptr<PlatformBuilder>();
+  auto simulation = std::unique_ptr<Simulation>(
+      new SimulationImpl(std::move(platform_builder)));
+  return simulation;
+}
 
 int main(int argc, char *argv[]) {
-  auto simulation = std::unique_ptr<fsim::simulation::SimulationImpl>(
-      new fsim::simulation::SimulationImpl());
+  auto simulation = CreateSimulation();
   simulation->Run();
   return 0;
 }

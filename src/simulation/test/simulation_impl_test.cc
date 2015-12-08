@@ -20,13 +20,24 @@
 * THE SOFTWARE.
 */
 
-#include "src/simulation/simulation_impl.h"
-#include "src/platform/test/mock_platform_builder.h"
+#include <memory>
 #include "gmock/gmock.h"
 #include "gtest/gtest.h"
+#include "src/simulation/simulation_impl.h"
+#include "src/platform/test/mock_platform_builder.h"
 
 TEST(Simulation, Run) {
-  fsim::platform::MockPlatformBuilder platform_builder;
-  EXPECT_CALL(platform_builder, Build())
+  using fsim::platform::MockPlatformBuilder;
+  using fsim::simulation::SimulationImpl;
+
+  auto platform_builder = std::unique_ptr<MockPlatformBuilder>(
+      new MockPlatformBuilder());
+  EXPECT_CALL(*platform_builder.get(), Build())
     .Times(1);
+
+  auto simulation = std::unique_ptr<SimulationImpl>(
+      new SimulationImpl(std::move(platform_builder)));
+
+  simulation->Run();
+
 }

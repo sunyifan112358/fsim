@@ -26,6 +26,14 @@
 namespace fsim {
 namespace simulation {
 
+SimulationImpl::SimulationImpl(
+    std::unique_ptr<platform::PlatformBuilder> platform_builder) :
+    platform_builder_(std::move(platform_builder)) {
+}
+
+SimulationImpl::~SimulationImpl() {
+}
+
 void SimulationImpl::Run() {
   AssemblePlatform();
   InstallOperatingSystem();
@@ -33,6 +41,7 @@ void SimulationImpl::Run() {
 }
 
 void SimulationImpl::AssemblePlatform() {
+  platform_ = platform_builder_->Build();
 }
 
 void SimulationImpl::InstallOperatingSystem() {
