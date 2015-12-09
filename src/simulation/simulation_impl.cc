@@ -26,28 +26,29 @@
 namespace fsim {
 namespace simulation {
 
-SimulationImpl::SimulationImpl(
-    std::unique_ptr<platform::PlatformBuilder> platform_builder) :
-    platform_builder_(std::move(platform_builder)) {
+SimulationImpl::SimulationImpl(platform::Platform *platform,
+                               os::OperatingSystem *operating_system,
+                               scheduler::Scheduler *scheduler) :
+                               platform_(platform),
+                               operating_system_(operating_system),
+                               scheduler_(scheduler) {
 }
 
 SimulationImpl::~SimulationImpl() {
 }
 
 void SimulationImpl::Run() {
-  AssemblePlatform();
-  InstallOperatingSystem();
+  StartProgram();
   ExecuteProgram();
 }
 
-void SimulationImpl::AssemblePlatform() {
-  platform_ = platform_builder_->Build();
-}
-
-void SimulationImpl::InstallOperatingSystem() {
+void SimulationImpl::StartProgram() {
 }
 
 void SimulationImpl::ExecuteProgram() {
+  while (scheduler_->HasMoreEvent()) {
+    scheduler_->ProcessOneEvent();
+  }
 }
 
 }  // namespace simulation

@@ -24,19 +24,31 @@
 #include "gmock/gmock.h"
 #include "gtest/gtest.h"
 #include "src/simulation/simulation_impl.h"
-#include "src/platform/test/mock_platform_builder.h"
+#include "src/platform/platform.h"
+#include "src/os/operating_system.h"
+#include "src/scheduler/test/mock_scheduler.h"
 
 TEST(Simulation, Run) {
-  using fsim::platform::MockPlatformBuilder;
+  using fsim::platform::Platform;
+  using fsim::os::OperatingSystem;
+  using fsim::scheduler::MockScheduler;
   using fsim::simulation::SimulationImpl;
+  using ::testing::Return;
 
-  auto platform_builder = std::unique_ptr<MockPlatformBuilder>(
-      new MockPlatformBuilder());
-  EXPECT_CALL(*platform_builder.get(), Build())
+  auto platform = std::unique_ptr<Platform>(nullptr);
+  auto operating_system = std::unique_ptr<OperatingSystem>(nullptr);
+  MockScheduler scheduler;
+  EXPECT_CALL(scheduler, HasMoreEvent())
+    .Times(2)
+    .WillOnce(Return(true))
+    .WillOnce(Return(false));
+  EXPECT_CALL(scheduler, ProcessOneEvent())
     .Times(1);
 
-  auto simulation = std::unique_ptr<SimulationImpl>(
-      new SimulationImpl(std::move(platform_builder)));
+  auto simulation = std::unique_ptr<SimulationImpl>(new SimulationImpl(
+          platform.get(),
+          operating_system.get(),
+          &scheduler));
 
   simulation->Run();
 

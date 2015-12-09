@@ -30,6 +30,8 @@ class Scheduler {
  public:
   Scheduler() {}
   virtual ~Scheduler() {}
+  virtual void ProcessOneEvent() = 0;
+  virtual bool HasMoreEvent() const = 0;
 };
 
 }  // namespace scheduler

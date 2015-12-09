@@ -28,11 +28,9 @@
 std::unique_ptr<fsim::simulation::Simulation> CreateSimulation() {
   using fsim::simulation::Simulation;
   using fsim::simulation::SimulationImpl;
-  using fsim::platform::PlatformBuilder;
 
-  auto platform_builder = std::unique_ptr<PlatformBuilder>();
   auto simulation = std::unique_ptr<Simulation>(
-      new SimulationImpl(std::move(platform_builder)));
+      new SimulationImpl(nullptr, nullptr, nullptr));
   return simulation;
 }
 

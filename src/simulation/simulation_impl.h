@@ -25,25 +25,27 @@
 
 #include <memory>
 #include "src/simulation/simulation.h"
-#include "src/platform/platform_builder.h"
 #include "src/platform/platform.h"
+#include "src/os/operating_system.h"
+#include "src/scheduler/scheduler.h"
 
 namespace fsim {
 namespace simulation {
 
 class SimulationImpl : public Simulation {
  public:
-  explicit SimulationImpl(
-      std::unique_ptr<platform::PlatformBuilder> platform_builder);
+  SimulationImpl(platform::Platform *platform,
+                 os::OperatingSystem *operating_system,
+                 scheduler::Scheduler *scheduler);
   virtual ~SimulationImpl();
   void Run() override;
 
  private:
-  std::unique_ptr<platform::PlatformBuilder> platform_builder_;
-  std::unique_ptr<platform::Platform> platform_;
+  platform::Platform *platform_;
+  os::OperatingSystem *operating_system_;
+  scheduler::Scheduler *scheduler_;
 
-  void AssemblePlatform();
-  void InstallOperatingSystem();
+  void StartProgram();
   void ExecuteProgram();
 };
 
