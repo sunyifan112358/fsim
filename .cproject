@@ -51,7 +51,9 @@
 				</linux>
 				<win32 command="cmake" generator="MinGWMakefiles" use-default="true">
 				</win32>
-				<defs/>
+				<defs>
+					<def name="CMAKE_BUILD_TYPE" type="STRING" val="Debug"/>
+				</defs>
 				<undefs/>
 			</storageModule>
 		</cconfiguration>

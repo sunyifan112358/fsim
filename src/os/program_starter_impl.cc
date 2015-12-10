@@ -41,6 +41,11 @@ ProgramStarterImpl::~ProgramStarterImpl() {
 }
 
 void ProgramStarterImpl::Start(const std::string& command) {
+  std::unique_ptr<Program> program = program_loader_->Load(command);
+  std::unique_ptr<Process> process = process_factory_->Produce();
+  std::unique_ptr<Thread> thread = thread_factory_->Produce();
+  process->AddThread(std::move(thread));
+  operating_system_->AddProcess(std::move(process));
 }
 
 }  // namespace os

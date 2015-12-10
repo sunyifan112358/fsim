@@ -20,19 +20,17 @@
  * THE SOFTWARE.
  */
 
-#ifndef SRC_OS_THREAD_H_
-#define SRC_OS_THREAD_H_
+#ifndef SRC_OS_TEST_MOCK_THREAD_H_
+#define SRC_OS_TEST_MOCK_THREAD_H_
 
 namespace fsim {
 namespace os {
 
-class Thread {
+class MockThread : public Thread {
  public:
-  Thread() {}
-  virtual ~Thread() {}
 };
 
 }  // namespace os
 }  // namespace fsim
 
-#endif  // SRC_OS_THREAD_H_
+#endif  // SRC_OS_TEST_MOCK_THREAD_H_

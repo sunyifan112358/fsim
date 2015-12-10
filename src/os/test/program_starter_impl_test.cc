@@ -28,24 +28,55 @@
 #include "src/os/test/mock_process_factory.h"
 #include "src/os/test/mock_thread_factory.h"
 #include "src/os/test/mock_process.h"
+#include "src/os/test/mock_thread.h"
+
+namespace {
+
+using fsim::os::ProgramStarterImpl;
+using fsim::os::MockOperatingSystem;
+using fsim::os::MockProgramLoader;
+using fsim::os::MockProcessFactory;
+using fsim::os::MockThreadFactory;
+using fsim::os::MockProcess;
+using fsim::os::MockThread;
+using ::testing::StrEq;
+using ::testing::Return;
+using ::testing::Pointee;
+using ::testing::ByMove;
+using ::testing::_;
+using ::testing::Invoke;
 
 TEST(ProgramStarter, Start) {
-  using fsim::os::ProgramStarterImpl;
-  using fsim::os::MockOperatingSystem;
-  using fsim::os::MockProgramLoader;
-  using fsim::os::MockProcessFactory;
-  using fsim::os::MockThreadFactory;
-  using fsim::os::MockProcess;
-  // using ::testing::_;
-
   MockOperatingSystem operating_system;
   MockProgramLoader program_loader;
   MockProcessFactory process_factory;
   MockThreadFactory thread_factory;
-  MockProcess process;
+  std::string command = "exec -args";
+
+  EXPECT_CALL(program_loader, Load(StrEq(command)))
+    .Times(1);
+
+  EXPECT_CALL(operating_system, DoAddProcess(_))
+    .Times(1);
+
+  EXPECT_CALL(process_factory, Produce())
+    .WillOnce(Invoke([]() {
+      auto process = std::unique_ptr<MockProcess>(new MockProcess());
+      EXPECT_CALL(*process.get(), DoAddThread(_)).
+        Times(1);
+      return std::move(process);
+    }));
+  EXPECT_CALL(thread_factory, Produce())
+    .WillOnce(Invoke([]() {
+      auto thread = std::unique_ptr<MockThread>(new MockThread());
+      return std::move(thread);
+    }));
 
   ProgramStarterImpl program_starter(&operating_system,
                                      &program_loader,
                                      &process_factory,
                                      &thread_factory);
+  program_starter.Start(command);
 }
+
+}  // namespace
