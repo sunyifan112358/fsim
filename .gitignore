@@ -45,3 +45,7 @@ cpplint
 
 # Vim temp files
 *.swp
+
+# gedit
+*.*~
+*~

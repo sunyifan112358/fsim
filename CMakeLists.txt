@@ -11,7 +11,7 @@ include_directories( ${CMAKE_SOURCE_DIR} )
 
 # Style check
 include( style_check.cmake )
-add_style_check_target( check "" "${SUB_DIRECTORIES}" )
+add_style_check_target( "" "" "${SUB_DIRECTORIES}" )
 
 # GTest
 include( ExternalProject )
@@ -43,7 +43,7 @@ include_directories( ${SOURCE_DIR}/googletest/include )
 include_directories( ${SOURCE_DIR}/googlemock/include )
 
 # CXX Flags
-set( CMAKE_CXX_FLAGS "-Wall -Werror -pthread -std=c++11")
+set( CMAKE_CXX_FLAGS " ${CMAKE_CXX_FLAGS} -Wall -Werror -pthread -std=c++11" )
 
 # Sub dirctories
 foreach( SUB_DIR ${SUB_DIRECTORIES} )

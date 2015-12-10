@@ -23,6 +23,8 @@
 #ifndef SRC_OS_OPERATING_SYSTEM_H_
 #define SRC_OS_OPERATING_SYSTEM_H_
 
+#include "src/os/process.h"
+
 namespace fsim {
 namespace os {
 
@@ -30,7 +32,8 @@ class OperatingSystem {
  public:
   OperatingSystem() {}
   virtual ~OperatingSystem() {}
-  virtual void StartProgram() = 0;
+  virtual void AddProcess(std::unique_ptr<Process> process) = 0;
+  virtual void AddThread(std::unique_ptr<Thread> thread) = 0;
 };
 
 }  // namespace os

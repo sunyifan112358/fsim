@@ -16,31 +16,37 @@ ExternalProject_Add(cpplint
 ExternalProject_Get_Property(cpplint SOURCE_DIR)
 set( CPPLINT ${SOURCE_DIR}/cpplint/cpplint.py )
 
-function(add_style_check_target TARGET_NAME SOURCES_LIST SUB_DIRS)
+function(add_style_check_target DIRECTORY SOURCE_LIST SUB_DIRECTORIES)
 
-  if(NOT SOURCES_LIST)
-    add_custom_target(${TARGET_NAME}
-      COMMENT "Linting ${TARGET_NAME}"
-      VERBATIM)
-  elseif(SOURCES_LIST)
-    foreach( a ${SOURCE_LIST})
-      message(${a})
-    endforeach (a)
-    #list(REMOVE_DUPLICATES SOURCE_LIST)
-    #list(SORT SOURCES_LIST)
+
+  if( DIRECTORY )
+    set( TARGET_NAME ${DIRECTORY}_check )
+  else( DIRECTORY )
+    set( TARGET_NAME check )
+  endif( DIRECTORY )
+
+
+  if( SOURCE_LIST )
     add_custom_target(${TARGET_NAME}
       COMMAND "${CMAKE_COMMAND}" -E chdir
-      "${CMAKE_CURRENT_SOURCE_DIR}"
-      "${CPPLINT}"
-      ${SOURCES_LIST}
-      DEPENDS cpplint ${SOURCES_LIST}
+        "${CMAKE_CURRENT_SOURCE_DIR}"
+        "${CPPLINT}"
+        ${SOURCE_LIST}
+      DEPENDS cpplint ${SOURCE_LIST}
       COMMENT "Linting ${TARGET_NAME}"
       VERBATIM)
-  endif()
+  else( SOURCE_LIST )
+     add_custom_target(${TARGET_NAME}
+     COMMENT "Linting ${TARGET_NAME}"
+     VERBATIM)
+  endif( SOURCE_LIST )
 
-  # Add sub directories as targets
-  foreach( DIR ${SUB_DIRS} )
-    add_dependencies(${TARGET_NAME} ${DIR}_check )
-  endforeach( DIR )
+  foreach(SUB_DIR ${SUB_DIRECTORIES})
+    if( DIRECTORY )
+      add_dependencies( ${TARGET_NAME} ${DIRECTORY}_${SUB_DIR}_check )
+    else( DIRECTORY )
+      add_dependencies( ${TARGET_NAME} ${SUB_DIR}_check )
+    endif( DIRECTORY )
+  endforeach(SUB_DIR)
 
 endfunction()
