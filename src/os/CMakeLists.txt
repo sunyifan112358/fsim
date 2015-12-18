@@ -27,6 +27,11 @@ add_style_check_target( ${FOLDER_NAME}
   "${CHECK_FILES}"
   "${SUB_DIRECTORIES}" )
 
+# Coveralls
+if( COVERALLS )
+  set( COVERAGE_SRCS "${COVERAGE_SRCS} ${SRC_FILES}" )
+endif()
+
 # Add sub directories
 foreach( SUB_DIR ${SUB_DIRECTORIES} )
   add_subdirectory( ${SUB_DIR} )

@@ -49,3 +49,8 @@ cpplint
 # gedit
 *.*~
 *~
+
+# coveralls
+*.gcov
+*.gcov_tmp
+coveralls.json

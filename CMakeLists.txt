@@ -3,6 +3,9 @@ cmake_minimum_required( VERSION 2.8 )
 # Project definition
 project( fsim )
 
+# CMAKE Modules
+set( CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${PROJECT_SOURCE_DIR}/cmake )
+
 # List of sub_directories
 set( SUB_DIRECTORIES src )
 
@@ -10,37 +13,23 @@ set( SUB_DIRECTORIES src )
 include_directories( ${CMAKE_SOURCE_DIR} )
 
 # Style check
-include( style_check.cmake )
+include( style_check )
 add_style_check_target( "" "" "${SUB_DIRECTORIES}" )
 
 # GTest
-include( ExternalProject )
-enable_testing()
-ExternalProject_Add( googletest
-  GIT_REPOSITORY https://github.com/google/googletest.git
-  PREFIX gtest
-  INSTALL_COMMAND ""
-)
-ExternalProject_Get_Property( googletest BINARY_DIR )
-ExternalProject_Get_Property( googletest SOURCE_DIR )
-add_library( gtest UNKNOWN IMPORTED )
-add_library( gtest_main UNKNOWN IMPORTED )
-add_library( gmock UNKNOWN IMPORTED )
-add_library( gmock_main UNKNOWN IMPORTED )
-set_target_properties( gtest PROPERTIES IMPORTED_LOCATION 
-  ${BINARY_DIR}/googlemock/gtest/libgtest.a )
-set_target_properties( gtest_main PROPERTIES IMPORTED_LOCATION 
-  ${BINARY_DIR}/googlemock/gtest/libgtest_main.a )
-set_target_properties( gmock PROPERTIES IMPORTED_LOCATION 
-  ${BINARY_DIR}/googlemock/libgmock.a )
-set_target_properties( gmock_main PROPERTIES IMPORTED_LOCATION 
-  ${BINARY_DIR}/googlemock/libgmock_main.a )
-add_dependencies( gtest googletest )
-add_dependencies( gtest_main googletest )
-add_dependencies( gmock googletest )
-add_dependencies( gmock_main googletest )
-include_directories( ${SOURCE_DIR}/googletest/include )
-include_directories( ${SOURCE_DIR}/googlemock/include )
+include( google_test )
+
+# Coveralls
+option(COVERALLS "Generate coveralls data" OFF)
+if( COVERALLS )
+  include( coveralls )
+  coveralls_turn_on_coverage()
+ 
+  file( GLOB_RECURSE ALL_SRCS RELATIVE "${PROJECT_SOURCE_DIR}" "*.cc")
+  set( COVERAGE_SRCS ${ALL_SRCS} )
+  message( "${COVERAGE_SRCS}" )
+  coveralls_setup( "${COVERAGE_SRCS}" ON )
+endif()
 
 # CXX Flags
 set( CMAKE_CXX_FLAGS " ${CMAKE_CXX_FLAGS} -Wall -Werror -pthread -std=c++11" )
@@ -51,10 +40,10 @@ foreach( SUB_DIR ${SUB_DIRECTORIES} )
 endforeach( SUB_DIR )
 
 # fsim main program
-add_executable(fsim src/fsim.cc)
+add_executable( fsim src/fsim.cc )
 
 # Libraries
-target_link_libraries(fsim 
+target_link_libraries( fsim 
   simulation
 )
 
